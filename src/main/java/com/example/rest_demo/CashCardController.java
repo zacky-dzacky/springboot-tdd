@@ -40,9 +40,11 @@ public class CashCardController {
     @PostMapping()
     private ResponseEntity<Void> createCashCard(
             @RequestBody CashCard newCashCardRequest,
-            UriComponentsBuilder ucb
+            UriComponentsBuilder ucb,
+            Principal principal
     ) {
-        CashCard savedCashCard = cashCardRepository.save(newCashCardRequest);
+        CashCard cashCardWithOwner = new CashCard(null, newCashCardRequest.amount(), principal.getName());
+        CashCard savedCashCard = cashCardRepository.save(cashCardWithOwner);
         URI locationOfNewCashCard = ucb
                 .path("cashcards/{id}")
                 .buildAndExpand(savedCashCard.id())

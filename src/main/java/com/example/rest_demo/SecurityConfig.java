@@ -21,7 +21,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/cashcards/**")
-                        .hasRole("CARD-OWNER"))
+                        .hasRole("OWNER")
+                )
                 .httpBasic(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable());
         return http.build();
@@ -38,7 +39,7 @@ public class SecurityConfig {
         UserDetails sarah = users
                 .username("sarah1")
                 .password(passwordEncoder.encode("abc123"))
-                .roles() // No roles for now
+                .roles("OWNER") // No roles for now
                 .build();
         UserDetails hankOwnsNoCards = users
                 .username("hank-owns-no-cards")
