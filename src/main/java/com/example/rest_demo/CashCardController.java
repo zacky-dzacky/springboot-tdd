@@ -62,4 +62,9 @@ public class CashCardController {
                 ));
         return ResponseEntity.ok(page.getContent());
     }
+
+    @PutMapping("/{requestedId}")
+    private ResponseEntity<Void> putCashCard(@PathVariable String requestedId, @RequestBody CashCard cashCard) {
+        return ResponseEntity.notFound().build();
+    }
 }
