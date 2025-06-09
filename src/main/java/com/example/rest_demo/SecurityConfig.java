@@ -41,11 +41,16 @@ public class SecurityConfig {
                 .password(passwordEncoder.encode("abc123"))
                 .roles("OWNER") // No roles for now
                 .build();
+        UserDetails kumar2 = users
+                .username("kumar2")
+                .password(passwordEncoder.encode("xyz789"))
+                .roles("OWNER") // No roles for now
+                .build();
         UserDetails hankOwnsNoCards = users
                 .username("hank-owns-no-cards")
                 .password(passwordEncoder.encode("qrs456"))
                 .roles("NON-OWNER") // new role
                 .build();
-        return new InMemoryUserDetailsManager(sarah, hankOwnsNoCards);
+        return new InMemoryUserDetailsManager(sarah, hankOwnsNoCards, kumar2);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.rest_demo;
 
+import org.apache.coyote.Response;
+import org.apache.juli.logging.Log;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -78,7 +81,20 @@ public class CashCardController {
         return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteCashCard(@PathVariable Long id, Principal principal) {
+
+        if (cashCardRepository.findByIdAndOwner(id, principal.getName()) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            cashCardRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+    }
+
     private CashCard findCashCard(Long requestedId, Principal principal) {
         return cashCardRepository.findByIdAndOwner(requestedId, principal.getName());
     }
+
+
 }
